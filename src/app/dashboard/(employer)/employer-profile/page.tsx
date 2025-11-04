@@ -35,10 +35,10 @@ interface Employer {
 
 export default function EmployerProfilePage() {
     const { id } = useParams();
-  const [employer, setEmployer] = useState<Employer | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState<Partial<Employer>>({});
+    const [employer, setEmployer] = useState<Employer | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState<Partial<Employer>>({});
 
     useEffect(() => {
         const fetchEmployer = async () => {
@@ -57,40 +57,40 @@ export default function EmployerProfilePage() {
     }, [id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
-  const handleUpdate = async () => {
-    try {
-      const res = await fetch(`https://job-portal-backend-xshy.onrender.com/api/employers/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const updated = await res.json();
-      setEmployer(updated);
-      setIsEditing(false);
-      alert("✅ Profile updated successfully!");
-    } catch (error) {
-      console.error("Failed to update:", error);
-      alert("❌ Update failed. Please try again.");
-    }
-  };
+    const handleUpdate = async () => {
+        try {
+            const res = await fetch(`https://job-portal-backend-xshy.onrender.com/api/employers/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+            const updated = await res.json();
+            setEmployer(updated);
+            setIsEditing(false);
+            alert("✅ Profile updated successfully!");
+        } catch (error) {
+            console.error("Failed to update:", error);
+            alert("❌ Update failed. Please try again.");
+        }
+    };
 
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-300">
-        Loading employer details...
-      </div>
-    );
+    if (loading)
+        return (
+            <div className="flex justify-center items-center h-screen text-gray-500 dark:text-gray-300">
+                Loading employer details...
+            </div>
+        );
 
-  if (!employer)
-    return (
-      <div className="flex justify-center items-center h-screen text-red-500">
-        Employer not found
-      </div>
-    );
+    if (!employer)
+        return (
+            <div className="flex justify-center items-center h-screen text-red-500">
+                Employer not found
+            </div>
+        );
 
 
     return (
@@ -232,61 +232,61 @@ export default function EmployerProfilePage() {
                 </div>
             </div>
             {/* Edit Modal */}
-      {isEditing && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 w-[90%] md:w-[600px]">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-              Update Employer Info
-            </h2>
+            {isEditing && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 w-[90%] md:w-[600px]">
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                            Update Employer Info
+                        </h2>
 
-            <div className="grid grid-cols-1 gap-4">
-              <input
-                name="companyName"
-                value={formData.companyName || ""}
-                onChange={handleChange}
-                placeholder="Company Name"
-                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-              />
-              <input
-                name="phone"
-                value={formData.phone || ""}
-                onChange={handleChange}
-                placeholder="Phone"
-                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-              />
-              <input
-                name="website"
-                value={formData.website || ""}
-                onChange={handleChange}
-                placeholder="Website"
-                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-              />
-              <textarea
-                name="companyDescription"
-                value={formData.companyDescription || ""}
-                onChange={handleChange}
-                placeholder="Company Description"
-                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 min-h-[100px]"
-              />
-            </div>
+                        <div className="grid grid-cols-1 gap-4">
+                            <input
+                                name="companyName"
+                                value={formData.companyName || ""}
+                                onChange={handleChange}
+                                placeholder="Company Name"
+                                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                            />
+                            <input
+                                name="phone"
+                                value={formData.phone || ""}
+                                onChange={handleChange}
+                                placeholder="Phone"
+                                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                            />
+                            <input
+                                name="website"
+                                value={formData.website || ""}
+                                onChange={handleChange}
+                                placeholder="Website"
+                                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                            />
+                            <textarea
+                                name="companyDescription"
+                                value={formData.companyDescription || ""}
+                                onChange={handleChange}
+                                placeholder="Company Description"
+                                className="p-2 rounded-md border dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 min-h-[100px]"
+                            />
+                        </div>
 
-            <div className="flex justify-end gap-3 mt-6">
-              <button
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdate}
-                className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 transition"
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
+                        <div className="flex justify-end gap-3 mt-6">
+                            <button
+                                onClick={() => setIsEditing(false)}
+                                className="px-4 py-2 rounded-md bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleUpdate}
+                                className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600 transition"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-      )}
-    </div>
     );
 }
