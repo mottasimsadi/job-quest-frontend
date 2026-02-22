@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, HousePlus, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 import JoinUsDropdown from "@/components/ui/JoinUsDropdown";
 import { useAuth } from "@/providers/AuthProvider";
@@ -85,7 +85,7 @@ export default function Navbar() {
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={`flex items-center space-x-2 transition-colors hover:opacity-80 text-white`}
                 >
-                  <span>{`${user?.firstName} ${user?.lastName}`}</span>
+                  <span>{`${user?.firstName}`}</span>
                   <ChevronDown size={16} />
                 </button>
 
@@ -140,14 +140,14 @@ export default function Navbar() {
             ))}
 
             {user ? (
-              <div className="border-t pt-2 mt-2">
-                <div className="py-2 text-gray-900 font-medium">
-                  {user?.name}
+              <div className=" pt-2 border-t-2 border-primary-lightest bg-primary-dark text-white rounded-2xl px-3 py-2 mt-2">
+                <div className="py-2 mb-3 border-b-2 px-4 text-center  text-[22px] tracking-widest border-b-white rounded-2xl  font-bold uppercase  font-mono">
+                  {user?.firstName}
                 </div>
                 <a
                   href="/dashboard"
-                  className="block py-2 text-gray-700 hover:text-[#7670d6] transition-colors"
-                >
+                  className=" py-2 flex cursor-pointer  duration-700 hover:translate-x-4 hover:font-bold  items-center gap-2 hover   transition-colors"
+                ><HousePlus></HousePlus>
                   Dashboard
                 </a>
                 {/* <button
@@ -162,9 +162,9 @@ export default function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left py-2 text-gray-700 hover:text-[#7670d6] transition-colors"
-                >
-                  <span className="ml-3">Logout</span>
+                  className="flex items-center cursor-pointer hover:font-bold  duration-700 hover:translate-x-4  gap-2 w-full text-left py-2  transition-colors"
+                ><LogOut></LogOut>
+                  <span >Logout</span>
                 </button>
               </div>
             ) : (

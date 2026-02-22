@@ -9,12 +9,16 @@ import { useAuth } from "@/providers/AuthProvider";
 import { IconBarrierBlock } from "@tabler/icons-react";
 
 interface ReviewData {
-  name: string;
+  userID: number,
+  role: string,
+  firstName: string,
+  lastName: string,
+  rating:number,
   designation?: string;
   review: string;
   email: string;
-  createdAt: string | Date;
-  status: string;
+  // createdAt: string | Date;
+
   image: string | number;
 }
 
@@ -32,7 +36,9 @@ export function ReviewSection() {
 
   // ✅ Mutation function to POST review
   const postReview = async (reviewData: ReviewData) => {
-    const response = await axiosInstance.post("/reviews", reviewData);
+    const response = await axiosInstance.post("/api/reviews", reviewData,
+      
+    );
     return response.data;
   };
 
@@ -70,13 +76,19 @@ export function ReviewSection() {
 
     const reviewData = {
       ...formData,
+      rating: 5,
       // userEmail: user?.email || defaultUserEmail,
       // userImage: user?.photoURL || defaultUserImage,
-      email: user?.email,
+      userID: user?._id,
+      userName:user?.firstName,
+      role: user.role,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user?.email || "user@gmail.com",
       image: user?.profile || defaultUserImage,
       designation: formData.designation,
-      createdAt: new Date().toISOString(),
-      status: "pending",
+      // createdAt: new Date().toISOString(),
+      // status: "pending",
     };
 
     await mutateAsync(reviewData);
@@ -114,7 +126,7 @@ export function ReviewSection() {
         <button
           onClick={() => setIsModalOpen(true)}
           disabled={!user}
-          className={`rounded-lg bg-yellow-500 px-8 py-3 font-semibold text-white transition-all ${!user?'cursor-not-allowed':'cursor-pointer'} hover:bg-yellow-700 hover:shadow-lg `}
+          className={`rounded-lg bg-yellow-500 px-8 py-3 font-semibold text-white transition-all ${!user ? 'cursor-not-allowed' : 'cursor-pointer'} hover:bg-yellow-700 hover:shadow-lg `}
         >
           Give Review
         </button>
